@@ -15,18 +15,18 @@ specific language governing permissions and limitations under the License.
 from .resource import Resource
 
 
-class IAMGroup(Resource):
+class IAMUser(Resource):
 
     def __init__(self, logical_id, value):
         """
-        "GroupName": String,
+        "UserName": String,
         "ManagedPolicyArns": [ String, ... ],
         "Path": String,
         "Policies": [ Policies, ... ]
         """
         super().__init__(logical_id, value)
 
-        self.group_name = None
+        self.user_name = None
         self.path = None
 
         self.policies = self.get_policies(
@@ -38,4 +38,7 @@ class IAMGroup(Resource):
         self.set_generic_keys(
             value.get("Properties", {}),
             ["Policies", "ManagedPolicyArns"],
+        )
+        self.set_properties(
+            value.get("Properties", {})
         )
